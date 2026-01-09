@@ -1,7 +1,5 @@
 import asyncio
 import sys
-from contextlib import asynccontextmanager
-from typing import AsyncIterator
 
 import uvicorn
 from dishka import make_async_container
@@ -21,12 +19,6 @@ container = make_async_container(
 )
 
 
-@asynccontextmanager
-async def lifespan(app: FastAPI) -> AsyncIterator[None]:
-    yield None
-    await app.state.dishka_container.close()
-
-
 def faststream_app() -> FastStream:
     broker = get_broker(config.rabbit)
     app = FastStream(broker)
@@ -41,7 +33,6 @@ def fastapi_app() -> FastAPI:
         description="Streaming service",
         version="1.0.0",
         default_response_class=ORJSONResponse,
-        lifespan=lifespan,
     )
     fastapi_setup_dishka(container, app)
     setup_routes(app)
@@ -54,6 +45,7 @@ def get_app() -> FastAPI:
 
     fastapi.add_event_handler("startup", faststream.broker.start)
     fastapi.add_event_handler("shutdown", faststream.broker.stop)
+    fastapi.add_event_handler("shutdown", fastapi.state.dishka_container.close)
 
     return fastapi
 
