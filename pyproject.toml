@@ -1,5 +1,5 @@
 [project]
-name = "fastpi-new-tech"
+name = "streaming-service"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
@@ -48,6 +48,6 @@ docstring-code-format = true
 known-first-party = ["src", "tests"]
 
 [tool.ruff.lint.per-file-ignores]
-"src/pixeld/infrastructure/persistence/migrations/env.py" = ["ERA001", "INP001", "E402"]
-"src/pixeld/infrastructure/persistence/migrations/versions/**" = ["ALL"]
+"src/streaming_service/infrastructure/persistence/migrations/env.py" = ["ERA001", "INP001", "E402"]
+"src/streaming_service/infrastructure/persistence/migrations/versions/**" = ["ALL"]
 "tests/**" = ["S101"]
