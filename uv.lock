@@ -1605,7 +1605,7 @@ dev = [
 lint = [
     { name = "ruff" },
 ]
-tests = [
+test = [
     { name = "locust" },
 ]
 
@@ -1628,7 +1628,7 @@ requires-dist = [
 [package.metadata.requires-dev]
 dev = [{ name = "pre-commit", specifier = ">=4.5.1" }]
 lint = [{ name = "ruff", specifier = ">=0.14.11" }]
-tests = [{ name = "locust", specifier = ">=2.43.0" }]
+test = [{ name = "locust", specifier = ">=2.43.0" }]
 
 [[package]]
 name = "typing-extensions"

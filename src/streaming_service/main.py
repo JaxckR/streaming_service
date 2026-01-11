@@ -14,6 +14,7 @@ from streaming_service.bootstrap.ioc import get_providers
 from streaming_service.controllers.http.routes import setup_routes
 from streaming_service.controllers.middlewares import setup_middlewares
 from streaming_service.infrastructure.adapters.broker_provider import get_broker
+from streaming_service.infrastructure.persistence.tables import setup_tables
 
 container = make_async_container(
     *get_providers(), context={PostgresConfig: config.postgres}
@@ -38,6 +39,7 @@ def fastapi_app() -> FastAPI:
     fastapi_setup_dishka(container, app)
     setup_routes(app)
     setup_middlewares(app)
+    setup_tables()
     return app
 
 
