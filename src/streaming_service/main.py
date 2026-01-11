@@ -12,6 +12,7 @@ from faststream import FastStream
 from streaming_service.bootstrap.config import PostgresConfig, config
 from streaming_service.bootstrap.ioc import get_providers
 from streaming_service.controllers.http.routes import setup_routes
+from streaming_service.controllers.middlewares import setup_middlewares
 from streaming_service.infrastructure.adapters.broker_provider import get_broker
 
 container = make_async_container(
@@ -36,6 +37,7 @@ def fastapi_app() -> FastAPI:
     )
     fastapi_setup_dishka(container, app)
     setup_routes(app)
+    setup_middlewares(app)
     return app
 
 
@@ -50,8 +52,8 @@ def get_app() -> FastAPI:
     return fastapi
 
 
-if __name__ == "__main__":
-    if sys.platform == "win32":
-        asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+if sys.platform == "win32":
+    asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
-    uvicorn.run("main:get_app", host="0.0.0.0", port=8000, factory=True, loop="none")
+if __name__ == "__main__":
+    uvicorn.run("main:get_app", host="0.0.0.0", port=8000, loop="none", factory=True)

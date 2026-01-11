@@ -1,7 +1,7 @@
 services:
   rabbitmq:
     image: rabbitmq:4.1-management
-    container_name: pixeld-rabbitmq
+    container_name: streaming_service_rabbitmq
     env_file:
       - .env
     environment:
@@ -18,6 +18,51 @@ services:
       timeout: 10s
       retries: 3
 
+  node_exporter:
+    image: prom/node-exporter:latest
+    container_name: streaming_service_node_exporter
+    ports:
+      - "9100:9100"
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.sysfs=/host/sys'
+      - '--path.rootfs=/rootfs'
+
+  prometheus:
+    image: prom/prometheus:v3.9.1
+    container_name: streaming_service_prometheus
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    ports:
+      - "9090:9090"
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--storage.tsdb.retention.time=168h'
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: streaming_service_grafana
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana.yml:/etc/grafana/provisioning/datasources/datasource.yml
+    depends_on:
+      - prometheus
+      - node_exporter
+
 
 volumes:
   rabbitmq_data:
+  prometheus_data:
+  grafana_data:
