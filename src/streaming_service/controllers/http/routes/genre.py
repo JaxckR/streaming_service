@@ -4,8 +4,10 @@ from dishka import FromDishka
 from dishka.integrations.fastapi import DishkaRoute
 from fastapi import APIRouter, Body
 
-from streaming_service.application.handlers.genre.create import CreateGenreHandler
-from streaming_service.application.handlers.genre.get_all import GetAllGenresHandler
+from streaming_service.application.handlers.genre import (
+    CreateGenreHandler,
+    GetAllGenresHandler,
+)
 
 genre_router = APIRouter(prefix="/genres", tags=["genre"], route_class=DishkaRoute)
 

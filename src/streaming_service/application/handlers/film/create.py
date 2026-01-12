@@ -1,10 +1,12 @@
 from dataclasses import dataclass
 from datetime import datetime
 
-from streaming_service.application.factories.film import FilmFactory
+from streaming_service.application.factories import FilmFactory
 from streaming_service.application.ports import TransactionManager
-from streaming_service.application.ports.repositories.film import FilmRepository
-from streaming_service.application.ports.repositories.genre import GenreRepository
+from streaming_service.application.ports.repositories import (
+    FilmRepository,
+    GenreRepository,
+)
 from streaming_service.entities.genre import GenreId
 
 

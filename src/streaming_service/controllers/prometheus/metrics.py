@@ -31,13 +31,13 @@ http_request_duration_seconds = Histogram(
 http_errors_4xx_total = Counter(
     "http_errors_4xx_total",
     "Total number of 4xx HTTP errors",
-    ["endpoint", "status_code"],
+    ["method", "endpoint", "status_code"],
     registry=registry,
 )
 
 http_errors_5xx_total = Counter(
     "http_errors_5xx_total",
     "Total number of 5xx HTTP errors",
-    ["endpoint", "status_code"],
+    ["method", "endpoint", "status_code"],
     registry=registry,
 )

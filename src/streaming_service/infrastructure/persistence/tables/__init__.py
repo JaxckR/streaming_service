@@ -6,12 +6,20 @@ __all__ = [
     "genre_table",
 ]
 
+from typing import Final, Callable
+
+from sqlalchemy.exc import ArgumentError
+
 from .base import mapper_registry
 from .film import map_film_table, map_film_genre_table, film_genre_table, film_table
 from .genre import map_genre_table, genre_table
 
+MAPPERS: Final[list[Callable]] = [map_genre_table, map_film_table, map_film_genre_table]
+
 
 def setup_tables() -> None:
-    map_genre_table()
-    map_film_table()
-    map_film_genre_table()
+    for mapper in MAPPERS:
+        try:
+            mapper()
+        except ArgumentError:
+            pass

@@ -1,12 +1,16 @@
 from dishka import Provider, Scope, provide_all
 
 from streaming_service.application.factories.film import FilmFactory
-from streaming_service.application.handlers.film.create import CreateFilmHandler
-from streaming_service.application.handlers.film.delete import DeleteFilmHandler
-from streaming_service.application.handlers.film.get import GetFilmHandler
-from streaming_service.application.handlers.film.get_all import GetAllFilmsHandler
-from streaming_service.application.handlers.genre.create import CreateGenreHandler
-from streaming_service.application.handlers.genre.get_all import GetAllGenresHandler
+from streaming_service.application.handlers.film import (
+    CreateFilmHandler,
+    DeleteFilmHandler,
+    GetAllFilmsHandler,
+    GetFilmHandler,
+)
+from streaming_service.application.handlers.genre import (
+    CreateGenreHandler,
+    GetAllGenresHandler,
+)
 
 
 class ApplicationProvider(Provider):

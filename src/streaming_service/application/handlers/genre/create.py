@@ -2,7 +2,7 @@ from datetime import datetime
 from typing import cast
 
 from streaming_service.application.ports import TransactionManager
-from streaming_service.application.ports.repositories.genre import GenreRepository
+from streaming_service.application.ports.repositories import GenreRepository
 from streaming_service.entities.genre import Genre
 
 

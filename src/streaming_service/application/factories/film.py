@@ -1,7 +1,7 @@
 from datetime import datetime
 from typing import cast
 
-from streaming_service.application.ports.id_generator import IdGenerator
+from streaming_service.application.ports import IdGenerator
 from streaming_service.entities.film import Film
 from streaming_service.entities.genre import Genre
 

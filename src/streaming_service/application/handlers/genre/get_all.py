@@ -1,4 +1,4 @@
-from streaming_service.application.ports.repositories.genre import GenreRepository
+from streaming_service.application.ports.repositories import GenreRepository
 from streaming_service.entities.genre import Genre
 
 

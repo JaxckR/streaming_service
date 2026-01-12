@@ -4,13 +4,13 @@ from dishka import FromDishka
 from dishka.integrations.fastapi import DishkaRoute
 from fastapi import APIRouter, Path
 
-from streaming_service.application.handlers.film.create import (
+from streaming_service.application.handlers.film import (
     CreateFilmRequest,
-    CreateFilmHandler,
+    DeleteFilmHandler,
+    GetFilmHandler,
+    GetAllFilmsHandler,
 )
-from streaming_service.application.handlers.film.delete import DeleteFilmHandler
-from streaming_service.application.handlers.film.get import GetFilmHandler
-from streaming_service.application.handlers.film.get_all import GetAllFilmsHandler
+from streaming_service.application.ports import Publisher
 from streaming_service.entities.film import FilmId
 
 film_router = APIRouter(prefix="/films", tags=["films"], route_class=DishkaRoute)
@@ -22,10 +22,8 @@ async def get_all(handler: FromDishka[GetAllFilmsHandler]):
 
 
 @film_router.post("/")
-async def create_film(
-    request: CreateFilmRequest, handler: FromDishka[CreateFilmHandler]
-):
-    await handler.handle(request)
+async def create_film(request: CreateFilmRequest, publisher: FromDishka[Publisher]):
+    await publisher.publish(queue="create_film", message=request)
 
 
 @film_router.delete("/{id}")

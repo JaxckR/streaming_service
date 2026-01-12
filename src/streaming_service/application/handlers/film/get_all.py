@@ -1,4 +1,4 @@
-from streaming_service.application.ports.repositories.film import FilmRepository
+from streaming_service.application.ports.repositories import FilmRepository
 from streaming_service.entities.film import Film
 
 

@@ -6,6 +6,8 @@ from starlette.types import Receive, Scope, Send
 from streaming_service.controllers.prometheus.metrics import (
     http_requests_total,
     http_request_duration_seconds,
+    http_errors_4xx_total,
+    http_errors_5xx_total,
 )
 
 
@@ -19,7 +21,7 @@ class MetricsMiddleware:
             return
 
         start_time = time.time()
-        status_code = None
+        status_code: int | None = None
 
         async def send_wrapper(message):
             nonlocal status_code
@@ -47,3 +49,12 @@ class MetricsMiddleware:
             method=method,
             endpoint=endpoint,
         ).observe(duration)
+
+        if status_code >= 500:
+            http_errors_5xx_total.labels(
+                method=method, endpoint=endpoint, status_code=status_code
+            ).inc()
+        elif status_code >= 400:
+            http_errors_4xx_total.labels(
+                method=method, endpoint=endpoint, status_code=status_code
+            ).inc()
