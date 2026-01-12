@@ -1,0 +1,42 @@
+from typing import Annotated
+
+from dishka import FromDishka
+from dishka.integrations.fastapi import DishkaRoute
+from fastapi import APIRouter, Path
+
+from streaming_service.application.handlers.film.create import (
+    CreateFilmRequest,
+    CreateFilmHandler,
+)
+from streaming_service.application.handlers.film.delete import DeleteFilmHandler
+from streaming_service.application.handlers.film.get import GetFilmHandler
+from streaming_service.application.handlers.film.get_all import GetAllFilmsHandler
+from streaming_service.entities.film import FilmId
+
+film_router = APIRouter(prefix="/films", tags=["films"], route_class=DishkaRoute)
+
+
+@film_router.get("/")
+async def get_all(handler: FromDishka[GetAllFilmsHandler]):
+    return await handler.handle()
+
+
+@film_router.post("/")
+async def create_film(
+    request: CreateFilmRequest, handler: FromDishka[CreateFilmHandler]
+):
+    await handler.handle(request)
+
+
+@film_router.delete("/{id}")
+async def delete_film(
+    film_id: Annotated[FilmId, Path(alias="id")], handler: FromDishka[DeleteFilmHandler]
+):
+    await handler.handle(film_id)
+
+
+@film_router.get("/{id}")
+async def get_film(
+    film_id: Annotated[FilmId, Path(alias="id")], handler: FromDishka[GetFilmHandler]
+):
+    return await handler.handle(film_id)

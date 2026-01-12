@@ -1,8 +1,8 @@
 """Added genre and film tables
 
-Revision ID: b7a65febc9b3
+Revision ID: 7b0ab520dfed
 Revises:
-Create Date: 2026-01-12 00:47:40.484346
+Create Date: 2026-01-12 01:29:58.102275
 
 """
 
@@ -13,7 +13,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = "b7a65febc9b3"
+revision: str = "7b0ab520dfed"
 down_revision: Union[str, Sequence[str], None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -41,6 +41,10 @@ def upgrade() -> None:
         "genres",
         sa.Column("id", sa.Integer(), autoincrement=True, nullable=False),
         sa.Column("name", sa.String(), nullable=False),
+        sa.Column(
+            "created_at", sa.DateTime(), server_default=sa.text("now()"), nullable=True
+        ),
+        sa.Column("updated_at", sa.DateTime(), nullable=True),
         sa.PrimaryKeyConstraint("id", name=op.f("pk_genres")),
     )
     op.create_table(

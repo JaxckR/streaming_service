@@ -1,7 +1,7 @@
 from datetime import datetime
 from typing import NewType
 
-from pydantic.dataclasses import dataclass
+from dataclasses import dataclass
 
 from streaming_service.entities.common import IdEntity
 
