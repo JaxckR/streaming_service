@@ -11,3 +11,9 @@ class ApplicationError(Exception):
 
 
 class NotFoundError(ApplicationError): ...
+
+
+class FieldError(ApplicationError): ...
+
+
+class UnauthorizedError(ApplicationError): ...

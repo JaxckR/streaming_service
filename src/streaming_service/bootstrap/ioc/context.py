@@ -1,6 +1,6 @@
 from dishka import Provider, Scope, from_context
 
-from streaming_service.bootstrap.config import PostgresConfig, RabbitConfig
+from streaming_service.bootstrap.config import PostgresConfig, RabbitConfig, JWTConfig
 
 
 class ContextProvider(Provider):
@@ -8,3 +8,4 @@ class ContextProvider(Provider):
 
     postgres_config = from_context(PostgresConfig)
     rabbit_config = from_context(RabbitConfig)
+    jwt_config = from_context(JWTConfig)

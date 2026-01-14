@@ -7,7 +7,12 @@ from fastapi.responses import ORJSONResponse
 from starlette import status
 from starlette.requests import Request
 
-from streaming_service.application.exceptions import ApplicationError, NotFoundError
+from streaming_service.application.exceptions import (
+    ApplicationError,
+    NotFoundError,
+    UnauthorizedError,
+    FieldError,
+)
 from streaming_service.controllers.http.schemas import ErrorResponse
 
 logger = logging.getLogger(__name__)
@@ -15,12 +20,14 @@ logger = logging.getLogger(__name__)
 EXCEPTIONS: Final[dict[Exception:status]] = {
     ApplicationError: status.HTTP_400_BAD_REQUEST,
     NotFoundError: status.HTTP_404_NOT_FOUND,
+    FieldError: status.HTTP_422_UNPROCESSABLE_CONTENT,
+    UnauthorizedError: status.HTTP_401_UNAUTHORIZED,
 }
 
 
 async def validate(_: Request, exception: Exception, code: int) -> ORJSONResponse:
     if info := str(exception):
-        content = ErrorResponse(detail=info)
+        content = ErrorResponse(detail=info).model_dump()
     else:
         content = None
 

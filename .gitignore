@@ -11,3 +11,6 @@ wheels/
 .idea
 
 .env
+
+jwt_private.key
+jwt_public.key

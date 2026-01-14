@@ -1,3 +1,4 @@
-__all__ = ["FilmFactory"]
+__all__ = ["FilmFactory", "UserFactory"]
 
 from .film import FilmFactory
+from .user import UserFactory

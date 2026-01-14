@@ -4,6 +4,7 @@ from typing import Final
 
 from fastapi import FastAPI, APIRouter
 
+from streaming_service.controllers.http.routes.auth import auth_router
 from streaming_service.controllers.http.routes.film import film_router
 from streaming_service.controllers.http.routes.genre import genre_router
 from streaming_service.controllers.http.routes.healthcheck import healthcheck_router
@@ -14,6 +15,7 @@ ROUTERS: Final[list[APIRouter]] = [
     index_router,
     genre_router,
     film_router,
+    auth_router,
 ]
 
 

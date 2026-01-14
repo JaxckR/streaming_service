@@ -5,9 +5,10 @@ from typing import Final
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 
+from streaming_service.controllers.http.middlewares.auth import ASGIAuthMiddleware
 from streaming_service.controllers.http.middlewares.metrics import MetricsMiddleware
 
-MIDDLEWARES: Final[list] = [MetricsMiddleware]
+MIDDLEWARES: Final[list] = [MetricsMiddleware, ASGIAuthMiddleware]
 
 
 def setup_middlewares(app: FastAPI) -> None:

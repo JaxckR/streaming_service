@@ -10,6 +10,7 @@ class IdEntity(Generic[IdType]):
     id: IdType
 
 
+@dataclass
 class Timestamp:
     created_at: datetime
     updated_at: datetime | None

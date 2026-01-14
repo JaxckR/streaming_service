@@ -1,6 +1,11 @@
 from dishka import Provider, Scope, provide_all
 
-from streaming_service.application.factories.film import FilmFactory
+from streaming_service.application.factories import FilmFactory, UserFactory
+from streaming_service.application.handlers.auth import (
+    LoginHandler,
+    LogoutHandler,
+    SignUpHandler,
+)
 from streaming_service.application.handlers.film import (
     CreateFilmHandler,
     DeleteFilmHandler,
@@ -16,7 +21,7 @@ from streaming_service.application.handlers.genre import (
 class ApplicationProvider(Provider):
     scope = Scope.REQUEST
 
-    fabrics = provide_all(FilmFactory)
+    fabrics = provide_all(FilmFactory, UserFactory, scope=Scope.APP)
 
     handlers = provide_all(
         CreateFilmHandler,
@@ -25,4 +30,7 @@ class ApplicationProvider(Provider):
         GetAllFilmsHandler,
         CreateGenreHandler,
         GetAllGenresHandler,
+        LoginHandler,
+        LogoutHandler,
+        SignUpHandler,
     )
