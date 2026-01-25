@@ -18,7 +18,7 @@ class DatabaseProvider(Provider):
     @provide(scope=Scope.APP)
     async def get_engine(self, config: PostgresConfig) -> AsyncIterator[AsyncEngine]:
         engine = create_async_engine(
-            config.url, pool_size=15, max_overflow=15, echo=False
+            config.url, pool_size=10, max_overflow=15, echo=False
         )
         yield engine
         await engine.dispose()

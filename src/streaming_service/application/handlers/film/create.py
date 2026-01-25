@@ -34,9 +34,7 @@ class CreateFilmHandler:
         self._genre_repository = genre_repository
 
     async def handle(self, request: CreateFilmRequest) -> None:
-        genres = [
-            await self._genre_repository.get(genre_id) for genre_id in request.genres
-        ]
+        genres = await self._genre_repository.get_many(request.genres)
 
         film = self._film_factory.create(
             title=request.title,
