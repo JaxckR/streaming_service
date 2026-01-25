@@ -14,7 +14,7 @@ class UserFactory:
         r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
     )
     USERNAME_REGEX: Final[Pattern[str]] = re.compile(
-        r"^[a-zA-Z0-9](?:[a-zA-Z0-9_]{1,253}[a-zA-Z0-9])?$"
+        r"^[a-zA-Z0-9][a-zA-Z0-9_]{1,253}[a-zA-Z0-9]$"
     )
 
     def __init__(self, id_generator: IdGenerator, hasher: Hasher) -> None:

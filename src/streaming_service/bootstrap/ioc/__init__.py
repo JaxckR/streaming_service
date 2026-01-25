@@ -1,6 +1,8 @@
-__all__ = ["container"]
+__all__ = ["container", "PROVIDERS"]
 
-from dishka import make_async_container
+from typing import Final
+
+from dishka import make_async_container, Provider
 from dishka.integrations.fastapi import FastapiProvider
 
 from streaming_service.bootstrap.config import (
@@ -15,15 +17,17 @@ from streaming_service.bootstrap.ioc.database import DatabaseProvider
 from streaming_service.bootstrap.ioc.infrastructure import InfrastructureProvider
 from streaming_service.bootstrap.ioc.presentation import PresentationProvider
 
+PROVIDERS: Final[list[Provider]] = [
+    ContextProvider(),
+    ApplicationProvider(),
+    DatabaseProvider(),
+    InfrastructureProvider(),
+    PresentationProvider(),
+    FastapiProvider(),
+]
+
 container = make_async_container(
-    *[
-        ContextProvider(),
-        ApplicationProvider(),
-        DatabaseProvider(),
-        InfrastructureProvider(),
-        PresentationProvider(),
-        FastapiProvider(),
-    ],
+    *PROVIDERS,
     context={
         PostgresConfig: config.postgres,
         RabbitConfig: config.rabbit,
